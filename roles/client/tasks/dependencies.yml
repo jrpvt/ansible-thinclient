@@ -1,0 +1,7 @@
+---
+  - name: Get gstreamer-plugins-base-devel.i686
+    yum:
+      name: gstreamer-plugins-base-devel.i686
+      state: latest
+      
+
