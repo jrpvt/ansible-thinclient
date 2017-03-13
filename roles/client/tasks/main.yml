@@ -1,0 +1,78 @@
+---
+  - name: Install rpmbuild
+    yum:
+      name: rpm-build
+      state: latest
+
+  - name: download compat-libffi-3.0.10-7.fc23.src.rpm
+    get_url:
+        url: https://dl.fedoraproject.org/pub/fedora/linux/releases/23/Everything/source/SRPMS/c/compat-libffi-3.0.10-7.fc23.src.rpm
+        dest: /tmp/compat-libffi-3.0.10-7.fc23.src.rpm
+
+  - name: rpm compat-libffi-3.0.10-7.fc23.src.rpm
+    shell: rpm -Uhv /tmp/compat-libffi-3.0.10-7.fc23.src.rpm
+    args:
+        executable: /bin/bash
+  
+  - name: rpmbuild compat-libffi
+    shell: rpmbuild -bb ~/rpmbuild/SPECS/compat-libffi.spec
+    args:
+      executable: /bin/bash
+  
+  - name: rpm new libffi
+    shell: rpm -Uhv ~/rpmbuild/RPMS/x86_64/compat-libffi-3.0.10-7.fc24.x86_64.rpm
+    args:
+      executable: /bin/bash
+
+  - name: download compat-libudev0-1.0-1.fc22.x86_64.rpm
+    get_url:
+        url: https://copr-be.cloud.fedoraproject.org/results/dacr/brackets/fedora-22-x86_64/compat-libudev0-1.0-1.fc21/compat-libudev0-1.0-1.fc22.x86_64.rpm
+        dest: /tmp/compat-libudev0-1.0-1.fc22.x86_64.rpm
+
+  - name: rpm compat-libudev0-1.0-1.fc22.x86_64.rpm
+    shell: rpm -Uhv /tmp/compat-libudev0-1.0-1.fc22.x86_64.rpm
+    args:
+        executable: /bin/bash
+  
+  - name: rpmbuild compat-libffi
+    shell: rpmbuild -bb ~/rpmbuild/SPECS/compat-libffi.spec
+    args:
+      executable: /bin/bash
+  
+ # - name: rpm new libudev
+ #   shell: rpm -Uhv ~/rpmbuild/RPMS/x86_64/compat-libffi-3.0.10-7.fc24.x86_64.rpm
+ #   args:
+ #     executable: /bin/bash
+
+  - name: Get gstreamer-plugins-base-devel.i686
+    yum:
+      name: gstreamer-plugins-base-devel.i686
+      state: latest
+  
+  - name: Get libpng12-devel.x86_64
+    yum:
+      name: libpng12-devel.x86_64
+      state: latest
+  
+  - name: Get libgudev-devel.x86_64
+    yum:
+      name: libgudev-devel.x86_64
+      state: latest
+
+  - name: Get libXScrnSaver
+    yum:
+      name: libXScrnSaver
+      state: latest
+
+  - name: Get VMware Horizon View client
+    get_url:
+      url: https://download3.vmware.com/software/view/viewclients/CART16Q4/VMware-Horizon-Client-4.3.0-4710754.x64.bundle
+      dest: /tmp/VMware-Horizon-Client-4.3.0-4710754.x64.bundle
+  
+  - name: Activate VMware Horizon View client
+    shell: chmod +x /tmp/VMware-Horizon-Client-4.3.0-4710754.x64.bundle
+    args:
+      executable: /bin/bash
+
+  - name: Install VMware Horizon View client
+    script: install_horizon_client.sh

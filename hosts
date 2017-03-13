@@ -1,0 +1,2 @@
+[thinclients]
+10.0.11.111 ansible_user=admin ansible_become_user=root

@@ -1,0 +1,10 @@
+---
+# This playbook will install all dependencies, including the Horizon View Client.
+
+- name: apply thin client configuration to all hosts
+  hosts: all
+  
+  roles:
+    - client
+  #tasks:
+  #  - include: roles/client/tasks/dependencies.yml
