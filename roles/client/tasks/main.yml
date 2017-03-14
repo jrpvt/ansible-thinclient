@@ -1,4 +1,9 @@
 ---
+  - name: Install libselinux-python.x86_64
+    yum:
+      name: libselinux-python.x86_64
+      state: latest
+
   - name: Install rpmbuild
     yum:
       name: rpm-build
@@ -23,6 +28,7 @@
     shell: rpm -Uhv ~/rpmbuild/RPMS/x86_64/compat-libffi-3.0.10-7.fc24.x86_64.rpm
     args:
       executable: /bin/bash
+    ignore_errors: true
 
   - name: download compat-libudev0-1.0-1.fc22.x86_64.rpm
     get_url:
@@ -33,6 +39,7 @@
     shell: rpm -Uhv /tmp/compat-libudev0-1.0-1.fc22.x86_64.rpm
     args:
         executable: /bin/bash
+    ignore_errors: true
   
   - name: rpmbuild compat-libffi
     shell: rpmbuild -bb ~/rpmbuild/SPECS/compat-libffi.spec
@@ -76,3 +83,40 @@
 
   - name: Install VMware Horizon View client
     script: install_horizon_client.sh
+
+  - name: Get loop script
+    copy:
+      src: loop.sh
+      dest: /loop.sh
+  
+  - name: Set permissions on loop script
+    file: dest=/loop.sh mode=a+x
+
+  - name: Get viewloop.service
+    copy:
+      src: viewloop.service
+      dest: /etc/systemd/system/viewloop.service
+
+  - name: Make autostart directory
+    file: path=/home/admin/.config/autostart state=directory
+
+  - name: Get viewclient.desktop
+    copy:
+      src: viewclient.desktop
+      dest: /home/admin/.config/autostart/viewclient.desktop
+  
+  - name: enable viewloop.service
+    shell: systemctl enable viewloop.service
+    args:
+      executable: /bin/bash
+  
+  - name: enable autologin for admin account
+    blockinfile:
+      dest: /etc/gdm/custom.conf
+      insertafter: '\[daemon\]'
+      content: |
+        AutomaticLoginEnable=true
+        AutomaticLogin=admin
+
+  - name: Reboot instance
+    command: /sbin/reboot
