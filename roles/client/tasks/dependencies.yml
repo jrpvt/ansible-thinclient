@@ -1,0 +1,85 @@
+---
+- name: Install libselinux-python.x86_64
+  yum:
+    name: libselinux-python.x86_64
+    state: latest
+
+- name: Install rpmbuild
+  yum:
+    name: rpm-build
+    state: latest
+
+- name: download compat-libffi
+  get_url:
+      url: "{{ compatlibffi_url }}"
+      dest: /tmp/{{ compatlibffi_name }}
+
+- name: rpm compat-libffi-3.0.10-7.fc23.src.rpm
+  shell: rpm -Uhv /tmp/{{ compatlibffi_name }}
+  args:
+      executable: /bin/bash
+
+- name: rpmbuild compat-libffi
+  shell: rpmbuild -bb ~/rpmbuild/SPECS/compat-libffi.spec
+  args:
+    executable: /bin/bash
+
+- name: rpm new libffi
+  shell: rpm -Uhv ~/rpmbuild/RPMS/x86_64/compat-libffi-3.0.10-7.fc{{ fedora_version }}.x86_64.rpm
+  args:
+    executable: /bin/bash
+  ignore_errors: true
+
+- name: download compat-libudev0
+  get_url:
+      url: "{{ compatlibudev0_url }}"
+      dest: /tmp/{{ compatlibudev0_name }}
+
+- name: rpm compat-libudev0
+  shell: rpm -Uhv /tmp/{{ compatlibudev0_name }}
+  args:
+      executable: /bin/bash
+  ignore_errors: true
+
+- name: rpmbuild compat-libffi
+  shell: rpmbuild -bb ~/rpmbuild/SPECS/compat-libffi.spec
+  args:
+    executable: /bin/bash
+
+# - name: rpm new libudev
+#   shell: rpm -Uhv ~/rpmbuild/RPMS/x86_64/compat-libffi-3.0.10-7.fc24.x86_64.rpm
+#   args:
+#     executable: /bin/bash
+
+- name: Get gstreamer-plugins-base-devel.i686
+  yum:
+    name: gstreamer-plugins-base-devel.i686
+    state: latest
+
+- name: Get libpng12-devel.x86_64
+  yum:
+    name: libpng12-devel.x86_64
+    state: latest
+
+- name: Get libgudev-devel.x86_64
+  yum:
+    name: libgudev-devel.x86_64
+    state: latest
+
+- name: Get libXScrnSaver
+  yum:
+    name: libXScrnSaver
+    state: latest
+
+- name: Get VMware Horizon View client
+  get_url:
+    url: "{{ horizon_view_url }}"
+    dest: /tmp/{{ horizon_view_client }}
+
+- name: Activate VMware Horizon View client
+  shell: chmod +x /tmp/{{ horizon_view_client }}
+  args:
+    executable: /bin/bash
+
+- name: Install VMware Horizon View client
+  script: install_horizon_client.sh

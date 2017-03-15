@@ -1,8 +1,0 @@
-[Unit]
-Description="Starts VMware loop.sh script on login"
-
-[Service]
-ExecStart=/bin/sh /loop.sh
-
-[Install]
-WantedBy=multi-user.target

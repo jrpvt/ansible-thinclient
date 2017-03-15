@@ -1,0 +1,74 @@
+---  
+- name: Setup loop script
+  blockinfile:
+    dest: "{{ loop_script_destination }}"
+    create: yes
+    owner: root
+    group: root
+    mode: "a+x"
+    content: |
+      #!/bin/sh
+      sleep {{ loop_sleep_time }}
+      while :
+      do result=$(ps -ef | grep -v grep | grep /usr/lib/vmware/view/bin/vmware-view)
+      if [ -z "$result" ]; then
+      reboot
+      fi
+      sleep {{ loop_refresh_time }}
+      done
+
+- name: Setup viewloop.service
+  blockinfile:
+    dest: "{{ viewloop_service_destination }}"
+    create: yes
+    content: |
+      [Unit]
+      Description="Starts VMware loop.sh script on login"
+
+      [Service]
+      ExecStart=/bin/sh /loop.sh
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Make autostart directory
+  file: path=/home/{{ local_username }}/.config/autostart state=directory
+
+- name: Setup viewclient.desktop
+  blockinfile:
+    dest: /home/{{ local_username }}/.config/autostart/viewclient.desktop
+    create: yes
+    content: |
+      [Desktop Entry]
+      Version=1.0
+      Name=viewclient
+      Comment=Starts VMware Horizon View client
+      Exec=/bin/sh -c "sleep {{ client_load_delay }} && vmware-view '--nonInteractive' '--serverURL={{ client_server_url }}' --desktopName='{{ client_desktop_name }}' '--nomenubar' '--once' '--allmonitors'"
+      Terminal=false
+      Type=Application
+      Icon=vmware-view
+      Categories=network
+      StartupNotify=false
+
+#- name: Get viewclient.desktop
+#  copy:
+#    src: viewclient.desktop
+#    dest: /home/{{ local_username }}/.config/autostart/viewclient.desktop
+
+- name: enable viewloop.service
+  shell: systemctl enable viewloop.service
+  args:
+    executable: /bin/bash
+
+- name: enable autologin for local user account
+  blockinfile:
+    dest: /etc/gdm/custom.conf
+    insertafter: '\[daemon\]'
+    content: |
+      AutomaticLoginEnable=true
+      AutomaticLogin={{ local_username }}
+
+- name: disable lock screen
+  shell: sudo -u {{ local_username }} DISPLAY=:0 gsettings set org.gnome.desktop.screensaver lock-enabled false
+  args:
+    executable: /bin/bash

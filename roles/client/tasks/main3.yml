@@ -1,7 +1,0 @@
-  - name: enable autologin for admin account
-    blockinfile:
-      dest: /etc/gdm/custom.conf
-      insertafter: '\[daemon\]'
-      content: |
-        AutomaticLoginEnable=true
-        AutomaticLogin=admin

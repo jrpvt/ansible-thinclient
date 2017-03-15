@@ -1,2 +1,2 @@
 [thinclients]
-localhostname ansible_user=admin ansible_become_user=root
+server1 ansible_user=user_account_here ansible_become_user=root
