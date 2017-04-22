@@ -1,4 +1,16 @@
 ---  
+- name: disable selinux part one
+  blockinfile:
+    dest: /etc/selinux/config
+    insertafter: SELINUX=enforcing
+    content: SELINUX=disabled
+
+- name: disable selinux part two
+  blockinfile:
+    dest: /etc/selinux/config
+    marker: SELINUX=enforcing
+    content: ""
+
 - name: Setup loop script
   blockinfile:
     dest: "{{ loop_script_destination }}"
@@ -50,11 +62,6 @@
       Categories=network
       StartupNotify=false
 
-#- name: Get viewclient.desktop
-#  copy:
-#    src: viewclient.desktop
-#    dest: /home/{{ local_username }}/.config/autostart/viewclient.desktop
-
 - name: enable viewloop.service
   shell: systemctl enable viewloop.service
   args:
@@ -68,7 +75,13 @@
       AutomaticLoginEnable=true
       AutomaticLogin={{ local_username }}
 
-- name: disable lock screen
-  shell: sudo -u {{ local_username }} DISPLAY=:0 gsettings set org.gnome.desktop.screensaver lock-enabled false
+- name: configure ctrl alt delete
+  blockinfile:
+    dest: /etc/vmware/view-mandatory-config
+    create: yes
+    content: view.sendCtrlAltDelToLocal = TRUE
+
+- name: disable lock screen, super key, overlay key and desktop notifications
+  shell: sudo -u {{ local_username }} DISPLAY=:0 gsettings set org.gnome.desktop.screensaver lock-enabled false && sudo -u {{ local_username }} DISPLAY=:0 gsettings set org.gnome.mutter overlay-key '' && sudo -u {{ local_username }} DISPLAY=:0 gsettings set org.gnome.desktop.session idle-delay 0 && sudo -u {{ local_username }} DISPLAY=:0 gsettings set org.gnome.desktop.notifications show-banners false
   args:
     executable: /bin/bash

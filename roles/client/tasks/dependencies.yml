@@ -83,3 +83,8 @@
 
 - name: Install VMware Horizon View client
   script: install_horizon_client.sh
+
+- name: Update all packages
+  yum:
+    name: '*' 
+    state: latest

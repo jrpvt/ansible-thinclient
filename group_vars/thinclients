@@ -1,8 +1,8 @@
 ---
-fedora_version: 24
+fedora_version: 25
 local_username: admin
-horizon_view_url: https://download3.vmware.com/software/view/viewclients/CART16Q4/VMware-Horizon-Client-4.3.0-4710754.x64.bundle
-horizon_view_client: VMware-Horizon-Client-4.3.0-4710754.x64.bundle
+horizon_view_url: https://download3.vmware.com/software/view/viewclients/CART17Q1/VMware-Horizon-Client-4.4.0-5167967.x64.bundle
+horizon_view_client: VMware-Horizon-Client-4.4.0-5167967.x64.bundle
 
 compatlibffi_name: compat-libffi-3.0.10-7.fc23.src.rpm
 compatlibudev0_name: compat-libudev0-1.0-1.fc22.x86_64.rpm
@@ -13,9 +13,10 @@ compatlibudev0_url: https://copr-be.cloud.fedoraproject.org/results/dacr/bracket
 loop_script_destination: /loop.sh
 viewloop_service_destination: /etc/systemd/system/viewloop.service
 
-loop_sleep_time: 60
+loop_sleep_time: 240
 loop_refresh_time: 5
 
-client_load_delay: 15
+client_load_delay: 60
+
 client_server_url: https://viewserver1.local
 client_desktop_name: Windows 10

@@ -5,4 +5,4 @@
   gather_facts: false
   tasks:
       - name: install packages for ansible support
-        raw: dnf -y -e0 -d0 install python python-dnf yum
+        raw: dnf -y -e0 -d0 install python python-dnf libselinux-python yum
