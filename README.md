@@ -21,8 +21,13 @@ systemctl enable sshd.service
 In keyboard settings, disable all shortcuts (use the Backspace key to set to disabled), except for shortcuts under the Sound and Media section.
 
 ## Set a unique hostname (optional)
-
 hostnamectl set-hostname uniquehostname1
+Update ansible hosts file with new thin client hostname (or IP)
+
+## Enable SSH public key access
+Create a public key on the Ansible control workstation
+Copy the public key to the new thin client
+ssh-copy-id root@thinclient_FQDN_or_IP_here
 
 ## Bootstrap Ansible dependencies not included with Fedora
 bootstrap_python.yml
