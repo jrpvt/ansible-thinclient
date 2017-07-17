@@ -19,6 +19,11 @@
   args:
       executable: /bin/bash
 
+- name: Add RPM Fusion Repositories
+  shell: dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+  args:
+      executable: /bin/bash
+
 - name: rpmbuild compat-libffi
   shell: rpmbuild -bb ~/rpmbuild/SPECS/compat-libffi.spec
   args:
@@ -69,6 +74,121 @@
 - name: Get libXScrnSaver
   yum:
     name: libXScrnSaver
+    state: latest
+
+- name: Get libva-intel-driver
+  yum:
+    name: libva-intel-driver
+    state: latest
+
+- name: Get mesa-dri-drivers
+  yum:
+    name: mesa-dri-drivers
+    state: latest
+
+- name: Get mesa-filesystem
+  yum:
+    name: mesa-filesystem
+    state: latest
+
+- name: Get mesa-libEGL
+  yum:
+    name: mesa-libEGL
+    state: latest
+
+- name: Get mesa-libEGL-devel
+  yum:
+    name: mesa-libEGL-devel
+    state: latest
+
+- name: Get mesa-libGL
+  yum:
+    name: mesa-libGL
+    state: latest
+
+- name: Get mesa-libGL-devel
+  yum:
+    name: mesa-libGL-devel
+    state: latest
+
+- name: Get mesa-libGLES
+  yum:
+    name: mesa-libGLES
+    state: latest
+
+- name: Get mesa-libGLES-devel
+  yum:
+    name: mesa-libGLES-devel
+    state: latest
+
+- name: Get mesa-libGLU
+  yum:
+    name: mesa-libGLU
+    state: latest
+
+- name: Get mesa-libGLU-devel
+  yum:
+    name: mesa-libGLU-devel
+    state: latest
+
+- name: Get mesa-libOpenCL
+  yum:
+    name: mesa-libOpenCL
+    state: latest
+
+- name: Get mesa-libOpenCL-devel
+  yum:
+    name: mesa-libOpenCL-devel
+    state: latest
+
+- name: Get mesa-libgbm
+  yum:
+    name: mesa-libgbm
+    state: latest
+
+- name: Get mesa-libglapi
+  yum:
+    name: mesa-libglapi
+    state: latest
+
+- name: Get mesa-libwayland-egl
+  yum:
+    name: mesa-libwayland-egl
+    state: latest
+
+- name: Get mesa-libwayland-egl-devel
+  yum:
+    name: mesa-libwayland-egl-devel
+    state: latest
+
+- name: Get mesa-libxatracker
+  yum:
+    name: mesa-libxatracker
+    state: latest
+
+- name: Get mesa-vulkan-devel
+  yum:
+    name: mesa-vulkan-devel
+    state: latest
+
+- name: Get mesa-vulkan-drivers
+  yum:
+    name: mesa-vulkan-drivers
+    state: latest
+
+- name: Get libva
+  yum:
+    name: libva
+    state: latest
+
+- name: Get libva-devel
+  yum:
+    name: libva-devel
+    state: latest
+
+- name: Get libva-utils
+  yum:
+    name: libva-utils
     state: latest
 
 - name: Get VMware Horizon View client

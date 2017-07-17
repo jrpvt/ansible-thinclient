@@ -1,8 +1,8 @@
 # ansible-thinclient
 ## Install Fedora from USB
-Fedora 25 ISO: https://download.fedoraproject.org/pub/fedora/linux/releases/25/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-25-1.3.iso
+Fedora 26 ISO: https://download.fedoraproject.org/pub/fedora/linux/releases/26/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-26-1.5.iso
 
-Create USB using Rufus: https://rufus.akeo.ie
+Create USB using Rufus: https://rufus.akeo.ie (or use dd)
 
 Boot from USB.  Set root and local user accounts during install.
 

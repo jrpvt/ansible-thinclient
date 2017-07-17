@@ -67,13 +67,14 @@
   args:
     executable: /bin/bash
 
-- name: enable autologin for local user account
+- name: enable autologin for local user account, disable Wayland for H.264 decode
   blockinfile:
     dest: /etc/gdm/custom.conf
     insertafter: '\[daemon\]'
     content: |
       AutomaticLoginEnable=true
       AutomaticLogin={{ local_username }}
+      WaylandEnable=false
 
 - name: configure ctrl alt delete
   blockinfile:

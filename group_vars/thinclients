@@ -1,8 +1,8 @@
 ---
-fedora_version: 25
+fedora_version: 26
 local_username: admin
-horizon_view_url: https://download3.vmware.com/software/view/viewclients/CART17Q1/VMware-Horizon-Client-4.4.0-5167967.x64.bundle
-horizon_view_client: VMware-Horizon-Client-4.4.0-5167967.x64.bundle
+horizon_view_url: https://download3.vmware.com/software/view/viewclients/CART17Q2/VMware-Horizon-Client-4.5.0-5650368.x64.bundle
+horizon_view_client: VMware-Horizon-Client-4.5.0-5650368.x64.bundle
 
 compatlibffi_name: compat-libffi-3.0.10-7.fc23.src.rpm
 compatlibudev0_name: compat-libudev0-1.0-1.fc22.x86_64.rpm
